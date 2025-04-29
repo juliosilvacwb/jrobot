@@ -1,9 +1,0 @@
-com\jrobot\RobotActions.class
-com\jrobot\MainApp$1.class
-com\jrobot\commands\RobotCommand.class
-com\jrobot\commands\ScriptInterpreter$Point.class
-com\jrobot\commands\ScriptInterpreter$1.class
-com\jrobot\commands\ScriptInterpreter.class
-com\jrobot\MainApp.class
-com\jrobot\RobotController.class
-com\jrobot\ToastNotification.class
