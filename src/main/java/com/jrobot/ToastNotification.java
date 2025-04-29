@@ -10,6 +10,10 @@ public class ToastNotification extends JWindow {
     private static final float MAX_OPACITY = 0.8f;
     
     public ToastNotification(String message) {
+        this(message, null);
+    }
+
+    public ToastNotification(String message, Color previewColor) {
         setAlwaysOnTop(true);
         setLayout(new BorderLayout());
         
@@ -21,7 +25,12 @@ public class ToastNotification extends JWindow {
         
         // Adicionar label ao painel com fundo escuro
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(0, 0, 0, 220));
+
+        Color bg = previewColor != null
+                    ? previewColor
+                    : new Color(0, 0, 0, 220);
+        panel.setBackground(bg);
+
         panel.add(label);
         add(panel);
 

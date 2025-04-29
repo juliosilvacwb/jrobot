@@ -14,48 +14,48 @@ public class RobotActions {
     static {
         SPECIAL_CHARS = new HashMap<>();
         // Vogais acentuadas minúsculas
-        SPECIAL_CHARS.put('á', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('à', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('ã', new int[]{KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('â', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('é', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_E});
-        SPECIAL_CHARS.put('è', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_E});
-        SPECIAL_CHARS.put('ê', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_E});
-        SPECIAL_CHARS.put('í', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_I});
-        SPECIAL_CHARS.put('ì', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_I});
-        SPECIAL_CHARS.put('î', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_I});
-        SPECIAL_CHARS.put('ó', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('ò', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('õ', new int[]{KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('ô', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('ú', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_U});
-        SPECIAL_CHARS.put('ù', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_U});
-        SPECIAL_CHARS.put('û', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_U});
-        
+        SPECIAL_CHARS.put('á', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('à', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('ã', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('â', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('é', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_E });
+        SPECIAL_CHARS.put('è', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_E });
+        SPECIAL_CHARS.put('ê', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_E });
+        SPECIAL_CHARS.put('í', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_I });
+        SPECIAL_CHARS.put('ì', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_I });
+        SPECIAL_CHARS.put('î', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_I });
+        SPECIAL_CHARS.put('ó', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('ò', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('õ', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('ô', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('ú', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_U });
+        SPECIAL_CHARS.put('ù', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_U });
+        SPECIAL_CHARS.put('û', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_U });
+
         // Vogais acentuadas maiúsculas
-        SPECIAL_CHARS.put('Á', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('À', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('Ã', new int[]{KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('Â', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_A});
-        SPECIAL_CHARS.put('É', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_E});
-        SPECIAL_CHARS.put('È', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_E});
-        SPECIAL_CHARS.put('Ê', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_E});
-        SPECIAL_CHARS.put('Í', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_I});
-        SPECIAL_CHARS.put('Ì', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_I});
-        SPECIAL_CHARS.put('Î', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_I});
-        SPECIAL_CHARS.put('Ó', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('Ò', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('Õ', new int[]{KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('Ô', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_O});
-        SPECIAL_CHARS.put('Ú', new int[]{KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_U});
-        SPECIAL_CHARS.put('Ù', new int[]{KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_U});
-        SPECIAL_CHARS.put('Û', new int[]{KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_U});
-        
+        SPECIAL_CHARS.put('Á', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('À', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('Ã', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('Â', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_A });
+        SPECIAL_CHARS.put('É', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_E });
+        SPECIAL_CHARS.put('È', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_E });
+        SPECIAL_CHARS.put('Ê', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_E });
+        SPECIAL_CHARS.put('Í', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_I });
+        SPECIAL_CHARS.put('Ì', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_I });
+        SPECIAL_CHARS.put('Î', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_I });
+        SPECIAL_CHARS.put('Ó', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('Ò', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('Õ', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('Ô', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_O });
+        SPECIAL_CHARS.put('Ú', new int[] { KeyEvent.VK_DEAD_ACUTE, KeyEvent.VK_U });
+        SPECIAL_CHARS.put('Ù', new int[] { KeyEvent.VK_DEAD_GRAVE, KeyEvent.VK_U });
+        SPECIAL_CHARS.put('Û', new int[] { KeyEvent.VK_DEAD_CIRCUMFLEX, KeyEvent.VK_U });
+
         // Caracteres especiais
-        SPECIAL_CHARS.put('ç', new int[]{KeyEvent.VK_DEAD_CEDILLA, KeyEvent.VK_C});
-        SPECIAL_CHARS.put('Ç', new int[]{KeyEvent.VK_DEAD_CEDILLA, KeyEvent.VK_C});
-        SPECIAL_CHARS.put('ñ', new int[]{KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_N});
-        SPECIAL_CHARS.put('Ñ', new int[]{KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_N});
+        SPECIAL_CHARS.put('ç', new int[] { KeyEvent.VK_DEAD_CEDILLA, KeyEvent.VK_C });
+        SPECIAL_CHARS.put('Ç', new int[] { KeyEvent.VK_DEAD_CEDILLA, KeyEvent.VK_C });
+        SPECIAL_CHARS.put('ñ', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_N });
+        SPECIAL_CHARS.put('Ñ', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_N });
     }
 
     public RobotActions() throws AWTException {
@@ -109,7 +109,7 @@ public class RobotActions {
         int i = 0;
         while (i < text.length()) {
             char c = text.charAt(i);
-            
+
             // Verificar sequência de escape
             if (c == '\\' && i + 1 < text.length()) {
                 char nextChar = text.charAt(i + 1);
@@ -120,7 +120,7 @@ public class RobotActions {
                     continue;
                 }
             }
-            
+
             // Verificar se é uma variável
             if (c == '$' && i + 1 < text.length()) {
                 StringBuilder varName = new StringBuilder();
@@ -130,7 +130,7 @@ public class RobotActions {
                     varName.append(text.charAt(j));
                     j++;
                 }
-                
+
                 if (varName.length() > 0) {
                     // Se a variável existe no ScriptInterpreter, use seu valor
                     String value = ScriptInterpreter.getVariableValue(varName.toString());
@@ -150,7 +150,7 @@ public class RobotActions {
                     continue;
                 }
             }
-            
+
             typeChar(c);
             i++;
         }
@@ -162,20 +162,20 @@ public class RobotActions {
             if (SPECIAL_CHARS.containsKey(character)) {
                 int[] keys = SPECIAL_CHARS.get(character);
                 boolean isUpperCase = Character.isUpperCase(character);
-                
+
                 // Se for maiúsculo, pressionar Shift
                 if (isUpperCase) {
                     robot.keyPress(KeyEvent.VK_SHIFT);
                 }
-                
+
                 // Pressionar tecla do acento
                 robot.keyPress(keys[0]);
                 robot.keyRelease(keys[0]);
-                
+
                 // Pressionar a letra
                 robot.keyPress(keys[1]);
                 robot.keyRelease(keys[1]);
-                
+
                 // Soltar Shift se necessário
                 if (isUpperCase) {
                     robot.keyRelease(KeyEvent.VK_SHIFT);
@@ -184,14 +184,14 @@ public class RobotActions {
                 // Para caracteres normais, usar o comportamento padrão
                 boolean upperCase = Character.isUpperCase(character);
                 int keyCode = KeyEvent.getExtendedKeyCodeForChar(character);
-                
+
                 if (upperCase) {
                     robot.keyPress(KeyEvent.VK_SHIFT);
                 }
-                
+
                 robot.keyPress(keyCode);
                 robot.keyRelease(keyCode);
-                
+
                 if (upperCase) {
                     robot.keyRelease(KeyEvent.VK_SHIFT);
                 }
@@ -258,4 +258,29 @@ public class RobotActions {
     public Point getMousePosition() {
         return MouseInfo.getPointerInfo().getLocation();
     }
-} 
+
+    public Color getColorAtMouse() {
+        Point mousePos = getMousePosition();
+        return robot.getPixelColor(mousePos.x, mousePos.y);
+    }
+
+    public Color getColorAt(int x, int y) {
+        return robot.getPixelColor(x, y);
+    }
+
+    /**
+     * Retorna a cor em formato hexadecimal (#RRGGBB) para a posição especificada
+     * 
+     * @param x coordenada X
+     * @param y coordenada Y
+     * @return String no formato "#RRGGBB"
+     */
+    public String getColorHexAt(int x, int y) {
+        Color color = getColorAt(x, y);
+        return String.format("#%02x%02x%02x",
+                color.getRed(),
+                color.getGreen(),
+                color.getBlue());
+    }
+
+}

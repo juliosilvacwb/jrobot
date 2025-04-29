@@ -228,10 +228,30 @@ public class MainApp extends JFrame implements NativeKeyListener, AutomationInte
         });
     }
 
+    private void captureScreenColor() {
+        Color color = robotController.getActions().getColorAtMouse();
+        String hexColor = String.format("#%02x%02x%02x", 
+            color.getRed(), color.getGreen(), color.getBlue());
+        
+        // Copiar para a área de transferência
+        StringSelection selection = new StringSelection(hexColor);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(selection, selection);
+        
+        // Mostrar notificação com preview da cor
+        SwingUtilities.invokeLater(() -> {
+            ToastNotification toast = new ToastNotification("Cor copiada: " + hexColor, color);
+            toast.setVisible(true);
+            toast.display();
+        });
+    }
+
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
         if (e.getKeyCode() == NativeKeyEvent.VC_F8) {
             SwingUtilities.invokeLater(this::captureMousePosition);
+        } else if (e.getKeyCode() == NativeKeyEvent.VC_F9) {
+            SwingUtilities.invokeLater(this::captureScreenColor);
         }
     }
 

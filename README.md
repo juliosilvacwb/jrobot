@@ -23,6 +23,7 @@ rightclick x,y           cliquedireito x,y         # Clique direito
 doubleclick x,y         duploclick x,y            # Clique duplo
 drag x1,y1,x2,y2        arrastar x1,y1,x2,y2      # Clique e arraste
 move x,y                 mover x,y                 # Mover mouse
+getcolor x,y            pegarcor x,y              # Get color at position
 ```
 
 ### Keyboard
@@ -127,9 +128,10 @@ end
 
 ## ⌨️ Global Shortcuts
 
-- `F6`: Start automation
-- `F7`: Stop automation
-- `F8`: Capture mouse position
+- `F6`: Start automation / Iniciar automação
+- `F7`: Stop automation / Parar automação
+- `F8`: Capture mouse position / Capturar posição do mouse
+- `F9`: Capture screen color / Capturar cor da tela
 
 ## 🛠️ Installation
 
@@ -186,6 +188,7 @@ cliquedireito x,y            # Clique direito
 duploclick x,y               # Clique duplo
 arrastar x1,y1,x2,y2         # Clique e arraste
 mover x,y                    # Mover mouse
+pegarcor x,y                # Pegar cor na posição
 ```
 
 ### Teclado
@@ -297,6 +300,7 @@ fim
 - `F6`: Iniciar automação
 - `F7`: Parar automação
 - `F8`: Capturar posição do mouse
+- `F9`: Capturar cor da tela
 
 ## 🛠️ Instalação
 
