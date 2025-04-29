@@ -56,6 +56,49 @@ public class RobotActions {
         SPECIAL_CHARS.put('Ç', new int[] { KeyEvent.VK_DEAD_CEDILLA, KeyEvent.VK_C });
         SPECIAL_CHARS.put('ñ', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_N });
         SPECIAL_CHARS.put('Ñ', new int[] { KeyEvent.VK_DEAD_TILDE, KeyEvent.VK_N });
+
+        // Outros caracteres especiais
+        SPECIAL_CHARS.put('!', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_1 });
+        SPECIAL_CHARS.put('@', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_2 });
+        SPECIAL_CHARS.put('#', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_3 });
+        SPECIAL_CHARS.put('$', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_4 });
+        SPECIAL_CHARS.put('%', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_5 });
+        SPECIAL_CHARS.put('¨', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_6 });
+        SPECIAL_CHARS.put('&', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_7 });
+        SPECIAL_CHARS.put('*', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_8 });
+        SPECIAL_CHARS.put('(', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_9 });
+        SPECIAL_CHARS.put(')', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_0 });
+        SPECIAL_CHARS.put('_', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_MINUS });
+        SPECIAL_CHARS.put('+', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_EQUALS });
+        SPECIAL_CHARS.put('=', new int[] { -1, KeyEvent.VK_EQUALS });
+        SPECIAL_CHARS.put('-', new int[] { -1, KeyEvent.VK_MINUS });
+        SPECIAL_CHARS.put('§', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('¢', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('£', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('³', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('²', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('¹', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('´', new int[] { -1, KeyEvent.VK_DEAD_ACUTE });
+        SPECIAL_CHARS.put('`', new int[] { -1, KeyEvent.VK_BACK_QUOTE });
+        SPECIAL_CHARS.put('[', new int[] { -1, KeyEvent.VK_OPEN_BRACKET });
+        SPECIAL_CHARS.put('{', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_OPEN_BRACKET });
+        SPECIAL_CHARS.put('ª', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('~', new int[] { -1, KeyEvent.VK_DEAD_TILDE });
+        SPECIAL_CHARS.put('^', new int[] { -1, KeyEvent.VK_DEAD_CIRCUMFLEX });
+        SPECIAL_CHARS.put(']', new int[] { -1, KeyEvent.VK_CLOSE_BRACKET });
+        SPECIAL_CHARS.put('}', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_CLOSE_BRACKET });
+        SPECIAL_CHARS.put('º', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put(';', new int[] { -1, KeyEvent.VK_SEMICOLON });
+        SPECIAL_CHARS.put(':', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON });
+        SPECIAL_CHARS.put('.', new int[] { -1, KeyEvent.VK_PERIOD });
+        SPECIAL_CHARS.put(',', new int[] { -1, KeyEvent.VK_COMMA });
+        SPECIAL_CHARS.put('>', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_PERIOD });
+        SPECIAL_CHARS.put('<', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_COMMA });
+        SPECIAL_CHARS.put('/', new int[] { -1, KeyEvent.VK_SLASH });
+        SPECIAL_CHARS.put('?', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH });
+        SPECIAL_CHARS.put('°', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('|', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SLASH });
+        SPECIAL_CHARS.put('\\', new int[] { -1, KeyEvent.VK_BACK_SLASH });
     }
 
     public RobotActions() throws AWTException {
@@ -158,42 +201,23 @@ public class RobotActions {
 
     private void typeChar(char character) {
         try {
-            // Verificar se é um caractere especial
             if (SPECIAL_CHARS.containsKey(character)) {
                 int[] keys = SPECIAL_CHARS.get(character);
-                boolean isUpperCase = Character.isUpperCase(character);
-
-                // Se for maiúsculo, pressionar Shift
-                if (isUpperCase) {
-                    robot.keyPress(KeyEvent.VK_SHIFT);
+                if (keys[0] != -1) {
+                    robot.keyPress(keys[0]);
                 }
-
-                // Pressionar tecla do acento
-                robot.keyPress(keys[0]);
-                robot.keyRelease(keys[0]);
-
-                // Pressionar a letra
                 robot.keyPress(keys[1]);
                 robot.keyRelease(keys[1]);
-
-                // Soltar Shift se necessário
-                if (isUpperCase) {
-                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                if (keys[0] != -1) {
+                    robot.keyRelease(keys[0]);
                 }
             } else {
-                // Para caracteres normais, usar o comportamento padrão
-                boolean upperCase = Character.isUpperCase(character);
                 int keyCode = KeyEvent.getExtendedKeyCodeForChar(character);
-
-                if (upperCase) {
-                    robot.keyPress(KeyEvent.VK_SHIFT);
-                }
-
-                robot.keyPress(keyCode);
-                robot.keyRelease(keyCode);
-
-                if (upperCase) {
-                    robot.keyRelease(KeyEvent.VK_SHIFT);
+                if (keyCode != KeyEvent.VK_UNDEFINED) {
+                    robot.keyPress(keyCode);
+                    robot.keyRelease(keyCode);
+                } else {
+                    System.err.println("Unable to type character: " + character);
                 }
             }
         } catch (IllegalArgumentException e) {
@@ -263,9 +287,18 @@ public class RobotActions {
         Point mousePos = getMousePosition();
         return robot.getPixelColor(mousePos.x, mousePos.y);
     }
-
+    
     public Color getColorAt(int x, int y) {
         return robot.getPixelColor(x, y);
+    }
+    
+       
+    /**
+     * Alias para permitir chamadas $getColor(x,y) nos scripts.
+     * Retorna o valor hexadecimal #RRGGBB do pixel em (x,y).
+     */
+    public String getColor(int x, int y) {
+        return getHexaColorAt(x, y);
     }
 
     /**
@@ -275,7 +308,7 @@ public class RobotActions {
      * @param y coordenada Y
      * @return String no formato "#RRGGBB"
      */
-    public String getColorHexAt(int x, int y) {
+    public String getHexaColorAt(int x, int y) {
         Color color = getColorAt(x, y);
         return String.format("#%02x%02x%02x",
                 color.getRed(),

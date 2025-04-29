@@ -1,25 +1,29 @@
 package com.jrobot.commands;
 
-import com.jrobot.RobotActions;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
+import java.lang.reflect.Method;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import com.jrobot.RobotActions;
+
 public class ScriptInterpreter {
     private final RobotActions actions;
-    private static final Pattern QUOTED_TEXT = Pattern.compile("\"([^\"]*)\"");
-    private static final Pattern VARIABLE_REF = Pattern.compile("\\$([a-zA-Z][a-zA-Z0-9_]*)");
+    private static final Pattern QUOTED_TEXT   = Pattern.compile("\"([^\"]*)\"");
+    private static final Pattern VARIABLE_REF  = Pattern.compile("\\$([a-zA-Z][a-zA-Z0-9_]*)");
+    private static final Pattern FUNCTION_CALL = Pattern.compile("^\\$([a-zA-Z][a-zA-Z0-9_]*)\\((.*)\\)$");
     private static final Map<String, String> variables = new HashMap<>();
+    
     private final Stack<Integer> blockStack = new Stack<>();
     private final Stack<Boolean> conditionStack = new Stack<>();
     private final java.util.List<String> scriptLines = new ArrayList<>();
@@ -217,20 +221,7 @@ public class ScriptInterpreter {
                     executeRepeat(args);
                     break;
                 case SET_VAR:
-                    String name = args.get(0);
-                    // Juntar todos os argumentos restantes como a expressão
-                    String expression = String.join(" ", args.subList(1, args.size()));
-                    // Remover aspas extras se presentes
-                    expression = expression.replaceAll("^\"|\"$", "");
-                    
-                    try {
-                        // Avaliar a expressão (que pode conter variáveis e operações)
-                        String value = evaluateMathExpression(expression);
-                        variables.put(name, value);
-                    } catch (Exception e) {
-                        System.err.println("Erro ao avaliar expressão: " + expression);
-                        e.printStackTrace();
-                    }
+                    setVar(args);
                     break;
                 case GET_VAR:
                     String getVarName = args.get(0);
@@ -256,6 +247,66 @@ public class ScriptInterpreter {
         } catch (Exception e) {
             System.err.println("Erro ao executar comando " + command + ": " + e.getMessage());
         }
+    }
+
+    private void setVar(java.util.List<String> args) {
+        String varName = args.get(0);
+        // Junta a expressão mantendo espaços e aspas
+        String expression = String.join(" ", args.subList(1, args.size())).trim();
+        String value;
+
+        Matcher funcMatcher = FUNCTION_CALL.matcher(expression);
+        if (funcMatcher.matches()) {
+            // É chamada de função: $nomeFunc(arg1,arg2,...)
+            String funcName = funcMatcher.group(1);
+            String paramsStr = funcMatcher.group(2);
+            String[] tokens = paramsStr.split(",");
+            Object[] paramsArr = new Object[tokens.length];
+            Class<?>[] paramTypes = new Class<?>[tokens.length];
+            
+            for (int i = 0; i < tokens.length; i++) {
+                String token = tokens[i].trim();
+                // Se for variável ($x), resolve antes
+                if (token.startsWith("$")) {
+                    token = variables.getOrDefault(token.substring(1), "");
+                }
+                int intVal = Integer.parseInt(token);
+                paramsArr[i] = intVal;
+                paramTypes[i] = int.class;
+            }
+            
+            try {
+                Method m = actions.getClass().getMethod(funcName, paramTypes);
+                Object result = m.invoke(actions, paramsArr);
+                // Preserva o resultado exatamente como retornado
+                value = (result != null ? result.toString() : "");
+            } catch (Exception e) {
+                System.err.println("Erro ao chamar função " + funcName + ": " + e.getMessage());
+                e.printStackTrace();
+                value = "";
+            }
+        } else {
+            // Não é chamada de função
+            String resolvedExpr = resolveVariables(expression);
+            
+            // Se começa com # é uma cor, preserva exatamente como está
+            if (resolvedExpr.startsWith("#")) {
+                value = resolvedExpr;
+            } else {
+                // Remove aspas apenas se não for cor
+                resolvedExpr = resolvedExpr.replaceAll("^\"|\"$", "");
+                try {
+                    value = evaluateMathExpression(resolvedExpr);
+                } catch (Exception e) {
+                    System.err.println("Erro ao avaliar expressão: " + resolvedExpr);
+                    e.printStackTrace();
+                    value = "";
+                }
+            }
+        }
+        
+        // Armazena o valor sem modificar
+        variables.put(varName, value);
     }
 
     private void executeClick(java.util.List<String> args) {
