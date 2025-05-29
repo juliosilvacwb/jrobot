@@ -160,6 +160,7 @@ repita 3 clique K
 - **F6**: Inicia a execução do script carregado
 - **F7**: Para a execução do script atual
 - **F8**: Captura a posição atual do mouse
+- **F9**: Captura a cor na posição atual do mouse
 
 ## Considerações de Desenvolvimento
 

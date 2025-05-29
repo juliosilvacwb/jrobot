@@ -25,8 +25,7 @@ public class MainApp extends JFrame implements NativeKeyListener, AutomationInte
     private final JButton stopButton;
     private final JButton selectFileButton;
     private final JLabel scriptFileLabel;
-    private volatile boolean isRunning = false;
-    private Point initialClick;  // Para controlar o arrasto da janela
+    private Point initialClick; 
 
     public MainApp() {
         super("JRobot");
@@ -198,14 +197,12 @@ public class MainApp extends JFrame implements NativeKeyListener, AutomationInte
             return;
         }
         
-        isRunning = true;
         updateButtonStates(true);
         updateButtonVisibility(false);
         robotController.startAutomation();
     }
 
     public void stopAutomation(ActionEvent e) {
-        isRunning = false;
         updateButtonStates(false);
         updateButtonVisibility(true);
         robotController.stopAutomation();
