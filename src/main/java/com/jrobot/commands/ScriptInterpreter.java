@@ -107,10 +107,12 @@ public class ScriptInterpreter {
                 args.add(parts[i]);
             }
 
-            RobotCommand.fromString(commandName).ifPresentOrElse(
-                command -> executeCommand(command, args),
-                () -> System.err.println("Comando desconhecido: " + commandName)
-            );
+            java.util.Optional<RobotCommand> commandOpt = RobotCommand.fromString(commandName);
+            if (commandOpt.isPresent()) {
+                executeCommand(commandOpt.get(), args);
+            } else {
+                System.err.println("Comando desconhecido: " + commandName);
+            }
         } catch (Exception e) {
             System.err.println("Erro ao executar linha: " + line);
             e.printStackTrace();

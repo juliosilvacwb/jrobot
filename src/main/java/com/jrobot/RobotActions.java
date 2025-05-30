@@ -72,22 +72,22 @@ public class RobotActions {
         SPECIAL_CHARS.put('+', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_EQUALS });
         SPECIAL_CHARS.put('=', new int[] { -1, KeyEvent.VK_EQUALS });
         SPECIAL_CHARS.put('-', new int[] { -1, KeyEvent.VK_MINUS });
-        SPECIAL_CHARS.put('§', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
-        SPECIAL_CHARS.put('¢', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
-        SPECIAL_CHARS.put('£', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
-        SPECIAL_CHARS.put('³', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
-        SPECIAL_CHARS.put('²', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
-        SPECIAL_CHARS.put('¹', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('§', new int[] { -1, -1 }); // Caractere não suportado
+        SPECIAL_CHARS.put('¢', new int[] { -1, -1 }); // Caractere não suportado
+        SPECIAL_CHARS.put('£', new int[] { -1, -1 }); // Caractere não suportado
+        SPECIAL_CHARS.put('³', new int[] { -1, -1 }); // Caractere não suportado
+        SPECIAL_CHARS.put('²', new int[] { -1, -1 }); // Caractere não suportado
+        SPECIAL_CHARS.put('¹', new int[] { -1, -1 }); // Caractere não suportado
         SPECIAL_CHARS.put('´', new int[] { -1, KeyEvent.VK_DEAD_ACUTE });
         SPECIAL_CHARS.put('`', new int[] { -1, KeyEvent.VK_BACK_QUOTE });
         SPECIAL_CHARS.put('[', new int[] { -1, KeyEvent.VK_OPEN_BRACKET });
         SPECIAL_CHARS.put('{', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_OPEN_BRACKET });
-        SPECIAL_CHARS.put('ª', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('ª', new int[] { -1, -1 }); // Caractere não suportado
         SPECIAL_CHARS.put('~', new int[] { -1, KeyEvent.VK_DEAD_TILDE });
         SPECIAL_CHARS.put('^', new int[] { -1, KeyEvent.VK_DEAD_CIRCUMFLEX });
         SPECIAL_CHARS.put(']', new int[] { -1, KeyEvent.VK_CLOSE_BRACKET });
         SPECIAL_CHARS.put('}', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_CLOSE_BRACKET });
-        SPECIAL_CHARS.put('º', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('º', new int[] { -1, -1 }); // Caractere não suportado
         SPECIAL_CHARS.put(';', new int[] { -1, KeyEvent.VK_SEMICOLON });
         SPECIAL_CHARS.put(':', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_SEMICOLON });
         SPECIAL_CHARS.put('.', new int[] { -1, KeyEvent.VK_PERIOD });
@@ -96,7 +96,7 @@ public class RobotActions {
         SPECIAL_CHARS.put('<', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_COMMA });
         SPECIAL_CHARS.put('/', new int[] { -1, KeyEvent.VK_SLASH });
         SPECIAL_CHARS.put('?', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH });
-        SPECIAL_CHARS.put('°', new int[] { -1, KeyEvent.VK_UNDEFINED }); // Adicione o tratamento específico
+        SPECIAL_CHARS.put('°', new int[] { -1, -1 }); // Adicione o tratamento específico
         SPECIAL_CHARS.put('|', new int[] { KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SLASH });
         SPECIAL_CHARS.put('\\', new int[] { -1, KeyEvent.VK_BACK_SLASH });
     }
@@ -203,6 +203,12 @@ public class RobotActions {
         try {
             if (SPECIAL_CHARS.containsKey(character)) {
                 int[] keys = SPECIAL_CHARS.get(character);
+                // Verificar se o caractere especial é suportado
+                if (keys[1] == -1) {
+                    System.err.println("Character not supported: " + character);
+                    return;
+                }
+                
                 if (keys[0] != -1) {
                     robot.keyPress(keys[0]);
                 }
@@ -212,16 +218,75 @@ public class RobotActions {
                     robot.keyRelease(keys[0]);
                 }
             } else {
-                int keyCode = KeyEvent.getExtendedKeyCodeForChar(character);
-                if (keyCode != KeyEvent.VK_UNDEFINED) {
-                    robot.keyPress(keyCode);
-                    robot.keyRelease(keyCode);
+                // Para Java 8, usar uma abordagem mais simples para caracteres básicos
+                if (Character.isLetterOrDigit(character)) {
+                    int keyCode = getKeyCodeForChar(character);
+                    if (keyCode != -1) {
+                        if (Character.isUpperCase(character)) {
+                            robot.keyPress(KeyEvent.VK_SHIFT);
+                            robot.keyPress(keyCode);
+                            robot.keyRelease(keyCode);
+                            robot.keyRelease(KeyEvent.VK_SHIFT);
+                        } else {
+                            robot.keyPress(keyCode);
+                            robot.keyRelease(keyCode);
+                        }
+                    } else {
+                        System.err.println("Unable to type character: " + character);
+                    }
                 } else {
                     System.err.println("Unable to type character: " + character);
                 }
             }
         } catch (IllegalArgumentException e) {
             System.err.println("Unable to type character: " + character);
+        }
+    }
+    
+    /**
+     * Método auxiliar para obter o código da tecla para um caractere (compatível com Java 8)
+     */
+    private int getKeyCodeForChar(char character) {
+        char upperChar = Character.toUpperCase(character);
+        switch (upperChar) {
+            case 'A': return KeyEvent.VK_A;
+            case 'B': return KeyEvent.VK_B;
+            case 'C': return KeyEvent.VK_C;
+            case 'D': return KeyEvent.VK_D;
+            case 'E': return KeyEvent.VK_E;
+            case 'F': return KeyEvent.VK_F;
+            case 'G': return KeyEvent.VK_G;
+            case 'H': return KeyEvent.VK_H;
+            case 'I': return KeyEvent.VK_I;
+            case 'J': return KeyEvent.VK_J;
+            case 'K': return KeyEvent.VK_K;
+            case 'L': return KeyEvent.VK_L;
+            case 'M': return KeyEvent.VK_M;
+            case 'N': return KeyEvent.VK_N;
+            case 'O': return KeyEvent.VK_O;
+            case 'P': return KeyEvent.VK_P;
+            case 'Q': return KeyEvent.VK_Q;
+            case 'R': return KeyEvent.VK_R;
+            case 'S': return KeyEvent.VK_S;
+            case 'T': return KeyEvent.VK_T;
+            case 'U': return KeyEvent.VK_U;
+            case 'V': return KeyEvent.VK_V;
+            case 'W': return KeyEvent.VK_W;
+            case 'X': return KeyEvent.VK_X;
+            case 'Y': return KeyEvent.VK_Y;
+            case 'Z': return KeyEvent.VK_Z;
+            case '0': return KeyEvent.VK_0;
+            case '1': return KeyEvent.VK_1;
+            case '2': return KeyEvent.VK_2;
+            case '3': return KeyEvent.VK_3;
+            case '4': return KeyEvent.VK_4;
+            case '5': return KeyEvent.VK_5;
+            case '6': return KeyEvent.VK_6;
+            case '7': return KeyEvent.VK_7;
+            case '8': return KeyEvent.VK_8;
+            case '9': return KeyEvent.VK_9;
+            case ' ': return KeyEvent.VK_SPACE;
+            default: return -1;
         }
     }
 
